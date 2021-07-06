@@ -51,7 +51,7 @@ byte GaluaFieldPolynomes::getRemainder(byte poly, byte modulo)
     degree_modulo = get_degree(modulo);
     while((difference = (degree_poly = get_degree(poly)) - degree_modulo) >= 0)
     {
-        poly = (modulo << difference) ^ poly;
+        poly ^= (modulo << difference);
     }
     return poly;
 }
@@ -59,9 +59,11 @@ byte GaluaFieldPolynomes::getRemainder(byte poly, byte modulo)
 byte GaluaFieldPolynomes::multiply(byte poly1, byte poly2, byte modulo)
 {
     byte result = 0;
+    byte tmp_poly2 = poly2;
+
     for(int i = 0; i < 8; i++)
     { 
-        result ^= poly1 * poly2 & (1 << i);
+        result ^= poly1 * (tmp_poly2 & (1 << i)); // мой вой был слышен в Америке 
     }
     
     result = getRemainder(result, modulo);
@@ -84,12 +86,15 @@ int main()
 {
     GaluaFieldPolynomes GFpoly;
     
-    byte k = 3;
-    byte m = 7;
+    byte k = 7;
+    byte m = 150;
     byte modulo = 283;
 
-    //std::cout << GFpoly.add(k, m) << std::endl;
-    //std::cout << sizeof(k) << std::endl; // 2 bytes
-    std::cout << GFpoly.multiply(k, m, modulo) << std::endl; // works for like normal polynomes
+    // std::cout << GFpoly.get_degree(m) << std::endl;
+    // std::cout << GFpoly.get_degree(modulo) << std::endl;
+
+    // std::cout << GFpoly.add(k, m) << std::endl;
+    // std::cout << sizeof(k) << std::endl; // 2 bytes
+    std::cout << GFpoly.multiply(k, m, modulo) << std::endl; 
     return 0;
 }
