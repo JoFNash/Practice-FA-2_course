@@ -3,7 +3,9 @@
 #include <iterator>
 #include <cmath>
 #include <fstream>
-#define MAX_DISH 64
+#include <limits>
+
+#define MAX_DISH 16
 #define IRRED_POLY 283
 #define REVERSE_POW 254
 
@@ -18,17 +20,17 @@ public:
     /* main methods */
     byte add(const byte& poly1, const byte& poly2);
     byte multiply(byte& poly1, const byte& poly2, const byte& modulo);
-    byte inverse(byte& poly, const byte& modulo);
+    byte& inverse(byte& poly, const byte& modulo);
 
     /* bonus method */
     int get_all_irreducible_polynomes();
 
     /* additional methods */
-    byte getRemainder(const byte& poly, const byte& modulo);
+    byte get_remainder(const byte& poly, const byte& modulo);
     bool check_irreducibility(const byte& poly);
     int get_degree(const byte& poly);
     bool odd_terms_in_polynomial(const byte& poly);
-    int print_irred_polynomes(std::vector<byte> vect);
+    int print_irred_polynomes(const std::vector<byte>& vect);
 };
 
 byte GaluaFieldPolynomes::add(const byte& poly1, const byte& poly2)
@@ -39,19 +41,19 @@ byte GaluaFieldPolynomes::add(const byte& poly1, const byte& poly2)
 int GaluaFieldPolynomes::get_degree(const byte& poly)
 {
     int degree = 0;
-    int place = 1;
+    byte bit = 1;
     for (int i = 0; i < MAX_DISH; i++)
     {
-        if (poly & place)
+        if (poly & bit)
         {
             degree = i;
         }
-        place <<= 1;
+        bit <<= 1;
     }
     return degree;
 }
 
-byte GaluaFieldPolynomes::getRemainder(const byte& poly, const byte& modulo)
+byte GaluaFieldPolynomes::get_remainder(const byte& poly, const byte& modulo)
 {
     int degree_modulo;
     int degree_poly;
@@ -74,40 +76,30 @@ byte GaluaFieldPolynomes::multiply(byte& poly1, const byte& poly2, const byte& m
 
     for (int i = 0; i < 8; i++)
     {
-        result ^= poly1 * (tmp_poly2 & (1 << i)); // мой вой был слышен в Америке 
+        result ^= poly1 * (tmp_poly2 & (1 << i)); 
     }
-
-    if (get_degree(result) > 7) // это условие можно убрать в принципе
-        result = getRemainder(result, modulo);
+    result = get_remainder(result, modulo);    
     return result;
 }
 
-
-byte GaluaFieldPolynomes::inverse(byte& poly, const byte& modulo)
+byte& GaluaFieldPolynomes::inverse(byte& poly, const byte& modulo)
 {
     int degree_pow;
     byte bit;
-    byte tmp_poly = poly;
+    byte tmp_poly;
 
-    degree_pow = get_degree(REVERSE_POW); // 7
-    bit = REVERSE_POW; // 254
-
-    if (poly == 0)
-        return 0;
-    else if (poly == 1)
-        return 1;
+    tmp_poly = poly;
+    degree_pow = get_degree(REVERSE_POW); 
+    bit = REVERSE_POW;
 
     for (int i = degree_pow; i >= 0; i--)
     {
-        std::cout << "bit = " << bit << std::endl;
-        std::cout << "poly = " << poly << std::endl;
-
         if (modulo & bit) // если 1
         {
             poly = multiply(poly, poly, modulo);
             poly = multiply(poly, tmp_poly, modulo);
         }
-        else             // если 0
+        else              // если 0
         {
             poly = multiply(poly, poly, modulo);
         }
@@ -116,6 +108,7 @@ byte GaluaFieldPolynomes::inverse(byte& poly, const byte& modulo)
     return poly;
 }
 
+/* check for zero or odd number of monomials */
 bool GaluaFieldPolynomes::odd_terms_in_polynomial(const byte& poly)
 {
     int counter_one = 0;
@@ -132,36 +125,38 @@ bool GaluaFieldPolynomes::odd_terms_in_polynomial(const byte& poly)
     }
 
     if (counter_one % 2)
-        return 1;
+        return true;
     else
-        return 0;
+        return false;
 }
 
+/* get 30 irreducible polynomials */
 int GaluaFieldPolynomes::get_all_irreducible_polynomes()
 {
-    int flag = 0;
+    int non_zero_remainders = 0; // число ненулевых остатков
+    byte min_poly_with_degree_8 = 256;
+    byte max_poly_with_degree_8 = 511;
+    byte j;
 
-    for (byte i = 256; i <= 511; i++)
+    for (byte i = min_poly_with_degree_8; i <= max_poly_with_degree_8; i++)
     {
         if (odd_terms_in_polynomial(i))
         {
-            for (byte j = 2; j < i; j++)
+            for (j = 2; j < i; j++)
             {
-                if (getRemainder(i, j) == 0)
+                if (get_remainder(i, j) == 0)
                 {
-                    flag = 0;
+                    non_zero_remainders = 0;
                     break;
                 }
                 else
-                {
-                    flag++;
-                }
+                    non_zero_remainders++;
             }
-            if (flag == i - 2)
+
+            if (non_zero_remainders == i - 2)
             {
                 irred_polynomes.push_back(i);
-                // std::cout << "Irred polynome = " << i << std::endl; // ахринеть, оно работает
-                flag = 0;
+                non_zero_remainders = 0;
             }
         }
     }
@@ -171,21 +166,20 @@ int GaluaFieldPolynomes::get_all_irreducible_polynomes()
         return 1;
 }
 
-int GaluaFieldPolynomes::print_irred_polynomes(std::vector<byte> vect)
+int GaluaFieldPolynomes::print_irred_polynomes(const std::vector<byte>& Vect)
 {
     std::ofstream file;
+    byte bit;
+    std::vector<byte>::const_iterator iter;
+
     file.open("file.txt");
-    byte bit = 256;
-    
+
     if(!file.is_open())
-    {
         return 0;
-    }
     else
     {
-        std::vector<byte>::const_iterator iter;
         file << "30 Irreducible polynomes:\n" << std::endl;
-        for (iter = vect.cbegin(); iter != vect.cend(); iter++)
+        for (iter = Vect.cbegin(); iter != Vect.cend(); iter++)
         {
             bit = 256;
             file << *iter << " = ";
@@ -209,14 +203,12 @@ int main()
 {
     GaluaFieldPolynomes GFpoly;
 
-    byte k = 2;
+    byte k = 3;
     byte m = 7;
 
-    // std::cout << GFpoly.add(k, m) << std::endl; 
-    // std::cout << GFpoly.multiply(k, m, IRRED_POLY) << std::endl; 
-    // std::cout << GFpoly.inverse(k, IRRED_POLY) << std::endl; 
-    // std::cout << GFpoly.odd_terms_in_polynomial(2) << std::endl;
-    // std::cout << GFpoly.odd_terms_in_polynomial(3) << std::endl;
+    std::cout << GFpoly.add(k, m) << std::endl; 
+    std::cout << GFpoly.multiply(k, m, IRRED_POLY) << std::endl; 
+    std::cout << GFpoly.inverse(k, IRRED_POLY) << std::endl; 
 
     if(GFpoly.get_all_irreducible_polynomes() == 0)
         std::cout << "Error: can't open file!" << std::endl;
