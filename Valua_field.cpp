@@ -18,14 +18,11 @@ private:
 
 public:
 
-    ~GaluaFieldPolynomes()
-    {
-        irred_polynomes.clear();
-    };
+    ~GaluaFieldPolynomes() = default;
 
     /* main methods */
     byte add(const byte& poly1, const byte& poly2);
-    byte multiply(byte& poly1, const byte& poly2, const byte& modulo);
+    byte multiply(const byte& poly1, const byte& poly2, const byte& modulo);
     byte& inverse(byte& poly, const byte& modulo);
 
     /* bonus method */
@@ -75,7 +72,7 @@ byte GaluaFieldPolynomes::get_remainder(const byte& poly, const byte& modulo)
     return tmp_poly;
 }
 
-byte GaluaFieldPolynomes::multiply(byte& poly1, const byte& poly2, const byte& modulo)
+byte GaluaFieldPolynomes::multiply(const byte& poly1, const byte& poly2, const byte& modulo)
 {
     byte result = 0;
     byte tmp_poly2 = poly2;
