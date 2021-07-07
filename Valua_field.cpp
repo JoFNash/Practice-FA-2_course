@@ -17,6 +17,12 @@ private:
     std::vector<byte> irred_polynomes;
 
 public:
+
+    ~GaluaFieldPolynomes()
+    {
+        irred_polynomes.clear();
+    };
+
     /* main methods */
     byte add(const byte& poly1, const byte& poly2);
     byte multiply(byte& poly1, const byte& poly2, const byte& modulo);
