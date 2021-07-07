@@ -1,9 +1,12 @@
 #include <iostream>
 #include <vector>
+#include <iterator>
 #include <cmath>
+#include <fstream>
 #define MAX_DISH 64
 #define IRRED_POLY 283
 #define REVERSE_POW 254
+
 typedef uint16_t byte;
 
 class GaluaFieldPolynomes
@@ -18,13 +21,14 @@ public:
     byte inverse(byte& poly, const byte& modulo);
 
     /* bonus method */
-    void get_all_irreducible_polynomes();
+    int get_all_irreducible_polynomes();
 
     /* additional methods */
     byte getRemainder(const byte& poly, const byte& modulo);
     bool check_irreducibility(const byte& poly);
     int get_degree(const byte& poly);
     bool odd_terms_in_polynomial(const byte& poly);
+    int print_irred_polynomes(std::vector<byte> vect);
 };
 
 byte GaluaFieldPolynomes::add(const byte& poly1, const byte& poly2)
@@ -133,7 +137,7 @@ bool GaluaFieldPolynomes::odd_terms_in_polynomial(const byte& poly)
         return 0;
 }
 
-void GaluaFieldPolynomes::get_all_irreducible_polynomes()
+int GaluaFieldPolynomes::get_all_irreducible_polynomes()
 {
     int flag = 0;
 
@@ -159,9 +163,45 @@ void GaluaFieldPolynomes::get_all_irreducible_polynomes()
                 // std::cout << "Irred polynome = " << i << std::endl; // ахринеть, оно работает
                 flag = 0;
             }
-
         }
+    }
+    if (print_irred_polynomes(irred_polynomes) == 0)
+        return 0;
+    else
+        return 1;
+}
 
+int GaluaFieldPolynomes::print_irred_polynomes(std::vector<byte> vect)
+{
+    std::ofstream file;
+    file.open("file.txt");
+    byte bit = 256;
+    
+    if(!file.is_open())
+    {
+        return 0;
+    }
+    else
+    {
+        std::vector<byte>::const_iterator iter;
+        file << "30 Irreducible polynomes:\n" << std::endl;
+        for (iter = vect.cbegin(); iter != vect.cend(); iter++)
+        {
+            bit = 256;
+            file << *iter << " = ";
+
+            for (byte k = get_degree(*iter); k > 0; k--)
+            {
+                if (bit & (*iter))
+                {
+                    file << "x^" << k << " + "; 
+                }
+                bit >>= 1;
+            }
+            file << "1" << std::endl;
+        }
+        file.close();
+        return 1;
     }
 }
 
@@ -178,7 +218,8 @@ int main()
     // std::cout << GFpoly.odd_terms_in_polynomial(2) << std::endl;
     // std::cout << GFpoly.odd_terms_in_polynomial(3) << std::endl;
 
-    GFpoly.get_all_irreducible_polynomes();
+    if(GFpoly.get_all_irreducible_polynomes() == 0)
+        std::cout << "Error: can't open file!" << std::endl;
 
     return 0;
 }
