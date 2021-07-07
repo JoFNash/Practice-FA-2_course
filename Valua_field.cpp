@@ -1,15 +1,8 @@
 #include <iostream>
-#define MAX_DISH 32
+#define MAX_DISH 64
+#define IRRED_POLY 283
+#define REVERSE_POW 254
 typedef uint16_t byte; 
-
-class Polynom // is this class required?
-{
-    public:
-        byte num;
-        Polynom(){};
-        ~Polynom(){};
-        
-};
 
 class GaluaFieldPolynomes 
 {
@@ -67,14 +60,33 @@ byte GaluaFieldPolynomes::multiply(byte poly1, byte poly2, byte modulo)
     }
     
     result = getRemainder(result, modulo);
-    
     return result;
 }
 
 
 byte GaluaFieldPolynomes::inverse(byte poly, byte modulo)
 {
-    // pass
+    int degree_pow;
+    int bit;
+    byte tmp_poly = poly;
+    
+    degree_pow = get_degree(REVERSE_POW);
+    bit = get_degree(REVERSE_POW);
+
+    for (int i = degree_pow; i > 0; i--)
+    {
+        if(modulo & bit)
+        {
+            poly = multiply(poly, poly, modulo);
+            poly = multiply(poly, tmp_poly, modulo);
+        }
+        else 
+        {
+            poly = multiply(poly, poly, modulo);
+        }
+        bit >>= 1;
+    }
+    return poly;
 }
 
 bool GaluaFieldPolynomes::check_irreducibility(byte poly)
@@ -86,15 +98,10 @@ int main()
 {
     GaluaFieldPolynomes GFpoly;
     
-    byte k = 7;
+    byte k = 2;
     byte m = 150;
-    byte modulo = 283;
 
-    // std::cout << GFpoly.get_degree(m) << std::endl;
-    // std::cout << GFpoly.get_degree(modulo) << std::endl;
-
-    // std::cout << GFpoly.add(k, m) << std::endl;
-    // std::cout << sizeof(k) << std::endl; // 2 bytes
-    std::cout << GFpoly.multiply(k, m, modulo) << std::endl; 
+    // std::cout << GFpoly.multiply(k, m, IRRED_POLY) << std::endl; 
+    std::cout << GFpoly.inverse(k, IRRED_POLY) << std::endl; 
     return 0;
 }
