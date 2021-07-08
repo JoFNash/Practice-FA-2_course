@@ -18,30 +18,30 @@ private:
 
 public:
 
-    ~GaluaFieldPolynomes() = default;
-
     /* main methods */
-    byte add(const byte& poly1, const byte& poly2);
-    byte multiply(const byte& poly1, const byte& poly2, const byte& modulo);
-    byte& inverse(byte& poly, const byte& modulo);
+    byte add(byte poly1, byte poly2) const;
+    byte multiply(byte poly1, byte poly2, byte modulo) const;
+    byte inverse(byte poly, byte modulo) const;
 
     /* bonus method */
-    int get_all_irreducible_polynomes();
+    int push_irred_polynomes_to_vector();
+    std::vector<byte> get_all_irred_polynomes() const;
 
     /* additional methods */
-    byte get_remainder(const byte& poly, const byte& modulo);
-    bool check_irreducibility(const byte& poly);
-    int get_degree(const byte& poly);
-    bool odd_terms_in_polynomial(const byte& poly);
-    int print_irred_polynomes(const std::vector<byte>& vect);
+    
+    byte get_remainder(byte poly, byte modulo) const;
+    bool check_irreducibility(byte poly) const;
+    int get_degree(byte poly) const;
+    bool odd_terms_in_polynomial(byte poly) const;
+    int print_irred_polynomes(std::vector<byte> vect) const;
 };
 
-byte GaluaFieldPolynomes::add(const byte& poly1, const byte& poly2)
+byte GaluaFieldPolynomes::add(byte poly1, byte poly2) const
 {
     return poly1 ^ poly2;
 }
 
-int GaluaFieldPolynomes::get_degree(const byte& poly)
+int GaluaFieldPolynomes::get_degree(byte poly) const
 {
     int degree = 0;
     byte bit = 1;
@@ -56,7 +56,7 @@ int GaluaFieldPolynomes::get_degree(const byte& poly)
     return degree;
 }
 
-byte GaluaFieldPolynomes::get_remainder(const byte& poly, const byte& modulo)
+byte GaluaFieldPolynomes::get_remainder(byte poly, byte modulo) const
 {
     int degree_modulo;
     int degree_poly;
@@ -72,7 +72,7 @@ byte GaluaFieldPolynomes::get_remainder(const byte& poly, const byte& modulo)
     return tmp_poly;
 }
 
-byte GaluaFieldPolynomes::multiply(const byte& poly1, const byte& poly2, const byte& modulo)
+byte GaluaFieldPolynomes::multiply(byte poly1, byte poly2, byte modulo) const
 {
     byte result = 0;
     byte tmp_poly2 = poly2;
@@ -85,7 +85,7 @@ byte GaluaFieldPolynomes::multiply(const byte& poly1, const byte& poly2, const b
     return result;
 }
 
-byte& GaluaFieldPolynomes::inverse(byte& poly, const byte& modulo)
+byte GaluaFieldPolynomes::inverse(byte poly, byte modulo) const
 {
     int degree_pow;
     byte bit;
@@ -112,7 +112,7 @@ byte& GaluaFieldPolynomes::inverse(byte& poly, const byte& modulo)
 }
 
 /* check for zero or odd number of monomials */
-bool GaluaFieldPolynomes::odd_terms_in_polynomial(const byte& poly)
+bool GaluaFieldPolynomes::odd_terms_in_polynomial(byte poly) const
 {
     int counter_one = 0;
     byte bit = 1;
@@ -134,7 +134,7 @@ bool GaluaFieldPolynomes::odd_terms_in_polynomial(const byte& poly)
 }
 
 /* get 30 irreducible polynomials */
-int GaluaFieldPolynomes::get_all_irreducible_polynomes()
+int GaluaFieldPolynomes::push_irred_polynomes_to_vector()
 {
     int non_zero_remainders = 0; // число ненулевых остатков
     byte min_poly_with_degree_8 = 256;
@@ -169,7 +169,12 @@ int GaluaFieldPolynomes::get_all_irreducible_polynomes()
         return 1;
 }
 
-int GaluaFieldPolynomes::print_irred_polynomes(const std::vector<byte>& Vect)
+std::vector<byte> GaluaFieldPolynomes::get_all_irred_polynomes() const
+{
+    return irred_polynomes;
+}
+
+int GaluaFieldPolynomes::print_irred_polynomes(std::vector<byte> Vect) const
 {
     std::ofstream file;
     byte bit;
@@ -213,7 +218,7 @@ int main()
     std::cout << GFpoly.multiply(k, m, IRRED_POLY) << std::endl; 
     std::cout << GFpoly.inverse(k, IRRED_POLY) << std::endl; 
 
-    if(GFpoly.get_all_irreducible_polynomes() == 0)
+    if(GFpoly.push_irred_polynomes_to_vector() == 0)
         std::cout << "Error: can't open file!" << std::endl;
 
     return 0;
