@@ -15,6 +15,8 @@ class GaluaFieldPolynomes
 {
 private:
     std::vector<uint16_t> irred_polynomes;
+    
+    int push_irred_polynomes_to_vector();
 
 public:
 
@@ -24,7 +26,6 @@ public:
     byte inverse(byte poly, uint16_t modulo) const;
 
     /* bonus method */
-    int push_irred_polynomes_to_vector();
     std::vector<uint16_t> get_irred_polynomes() const; // for further work with irred_polynomes
 
     /* additional methods */
@@ -171,6 +172,7 @@ int GaluaFieldPolynomes::push_irred_polynomes_to_vector()
 
 std::vector<uint16_t> GaluaFieldPolynomes::get_irred_polynomes() const
 {
+    get_irred_polynomes();
     return irred_polynomes;
 }
 
@@ -218,8 +220,7 @@ int main()
     std::cout << (unsigned)GFpoly.multiply(k, m, IRRED_POLY) << std::endl;
     std::cout << (unsigned)GFpoly.inverse(k, IRRED_POLY) << std::endl;
 
-    if (GFpoly.push_irred_polynomes_to_vector() == 0)
-         std::cout << "Error: can't open file!" << std::endl;
+    GFpoly.get_irred_polynomes();
 
 
     return 0;
