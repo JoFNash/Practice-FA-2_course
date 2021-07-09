@@ -9,7 +9,7 @@ namespace lab3
         
         static void Main(string[] args)
         {
-            TimeSpan lifeTime = new TimeSpan(0, 0, 5, 1, 0);
+            TimeSpan lifeTime = new TimeSpan(1, 1, 1, 1, 1);
             Cache<Test> cache = new Cache<Test>(lifeTime, 3);
 
             cache.Save("KEY1", new Test(1));
