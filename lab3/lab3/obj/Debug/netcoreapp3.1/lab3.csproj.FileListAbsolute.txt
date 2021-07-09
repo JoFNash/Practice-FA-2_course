@@ -1,0 +1,26 @@
+D:\2 kurs 4 semestr\Summer-Practice-2021\C#\lab3\lab3\lab3\bin\Debug\netcoreapp3.1\lab3.exe
+D:\2 kurs 4 semestr\Summer-Practice-2021\C#\lab3\lab3\lab3\bin\Debug\netcoreapp3.1\lab3.deps.json
+D:\2 kurs 4 semestr\Summer-Practice-2021\C#\lab3\lab3\lab3\bin\Debug\netcoreapp3.1\lab3.runtimeconfig.json
+D:\2 kurs 4 semestr\Summer-Practice-2021\C#\lab3\lab3\lab3\bin\Debug\netcoreapp3.1\lab3.runtimeconfig.dev.json
+D:\2 kurs 4 semestr\Summer-Practice-2021\C#\lab3\lab3\lab3\bin\Debug\netcoreapp3.1\lab3.dll
+D:\2 kurs 4 semestr\Summer-Practice-2021\C#\lab3\lab3\lab3\bin\Debug\netcoreapp3.1\lab3.pdb
+D:\2 kurs 4 semestr\Summer-Practice-2021\C#\lab3\lab3\lab3\obj\Debug\netcoreapp3.1\lab3.csprojAssemblyReference.cache
+D:\2 kurs 4 semestr\Summer-Practice-2021\C#\lab3\lab3\lab3\obj\Debug\netcoreapp3.1\lab3.AssemblyInfoInputs.cache
+D:\2 kurs 4 semestr\Summer-Practice-2021\C#\lab3\lab3\lab3\obj\Debug\netcoreapp3.1\lab3.AssemblyInfo.cs
+D:\2 kurs 4 semestr\Summer-Practice-2021\C#\lab3\lab3\lab3\obj\Debug\netcoreapp3.1\lab3.csproj.CoreCompileInputs.cache
+D:\2 kurs 4 semestr\Summer-Practice-2021\C#\lab3\lab3\lab3\obj\Debug\netcoreapp3.1\lab3.dll
+D:\2 kurs 4 semestr\Summer-Practice-2021\C#\lab3\lab3\lab3\obj\Debug\netcoreapp3.1\lab3.pdb
+D:\2 kurs 4 semestr\Summer-Practice-2021\C#\lab3\lab3\lab3\obj\Debug\netcoreapp3.1\lab3.genruntimeconfig.cache
+C:\Users\Ольга\Desktop\PassTrums\Summer-Practice-2021\C#\lab3\lab3\lab3\bin\Debug\netcoreapp3.1\lab3.exe
+C:\Users\Ольга\Desktop\PassTrums\Summer-Practice-2021\C#\lab3\lab3\lab3\bin\Debug\netcoreapp3.1\lab3.deps.json
+C:\Users\Ольга\Desktop\PassTrums\Summer-Practice-2021\C#\lab3\lab3\lab3\bin\Debug\netcoreapp3.1\lab3.runtimeconfig.json
+C:\Users\Ольга\Desktop\PassTrums\Summer-Practice-2021\C#\lab3\lab3\lab3\bin\Debug\netcoreapp3.1\lab3.runtimeconfig.dev.json
+C:\Users\Ольга\Desktop\PassTrums\Summer-Practice-2021\C#\lab3\lab3\lab3\bin\Debug\netcoreapp3.1\lab3.dll
+C:\Users\Ольга\Desktop\PassTrums\Summer-Practice-2021\C#\lab3\lab3\lab3\bin\Debug\netcoreapp3.1\lab3.pdb
+C:\Users\Ольга\Desktop\PassTrums\Summer-Practice-2021\C#\lab3\lab3\lab3\obj\Debug\netcoreapp3.1\lab3.csprojAssemblyReference.cache
+C:\Users\Ольга\Desktop\PassTrums\Summer-Practice-2021\C#\lab3\lab3\lab3\obj\Debug\netcoreapp3.1\lab3.AssemblyInfoInputs.cache
+C:\Users\Ольга\Desktop\PassTrums\Summer-Practice-2021\C#\lab3\lab3\lab3\obj\Debug\netcoreapp3.1\lab3.AssemblyInfo.cs
+C:\Users\Ольга\Desktop\PassTrums\Summer-Practice-2021\C#\lab3\lab3\lab3\obj\Debug\netcoreapp3.1\lab3.csproj.CoreCompileInputs.cache
+C:\Users\Ольга\Desktop\PassTrums\Summer-Practice-2021\C#\lab3\lab3\lab3\obj\Debug\netcoreapp3.1\lab3.dll
+C:\Users\Ольга\Desktop\PassTrums\Summer-Practice-2021\C#\lab3\lab3\lab3\obj\Debug\netcoreapp3.1\lab3.pdb
+C:\Users\Ольга\Desktop\PassTrums\Summer-Practice-2021\C#\lab3\lab3\lab3\obj\Debug\netcoreapp3.1\lab3.genruntimeconfig.cache
