@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Cache;
 using TestVar;
 
@@ -10,17 +10,17 @@ namespace lab3
         static void Main(string[] args)
         {
             TimeSpan lifeTime = new TimeSpan(0, 0, 5, 1, 0);
-            Cache<Test> appCache = new Cache<Test>(lifeTime, 3);
+            Cache<Test> cache = new Cache<Test>(lifeTime, 3);
 
-            appCache.Save("KEY1", new Test(1));
-            appCache.Save("KEY2", new Test(2));
-            appCache.Save("KEY3", new Test(3));
+            cache.Save("KEY1", new Test(1));
+            cache.Save("KEY2", new Test(2));
+            cache.Save("KEY3", new Test(3));
 
-            Console.WriteLine("KEY2: " + appCache.Get("KEY2").GetValue().ToString());
+            Console.WriteLine("KEY2: " + cache.Get("KEY2").GetValue().ToString());
 
             try
             {
-                appCache.Save("newKEY", new Test(100));
+                cache.Save("newKEY", new Test(100));
             }
             catch (ArgumentException ex)
             {
@@ -29,7 +29,7 @@ namespace lab3
 
             try
             {
-                appCache.Get("KEY1");
+                cache.Get("KEY1");
             }
             catch (Exception ex)
             {
@@ -38,7 +38,7 @@ namespace lab3
 
             try
             {
-                Console.WriteLine(appCache.Get("KEY100").GetValue().ToString());
+                Console.WriteLine(cache.Get("KEY100").GetValue().ToString());
             }
             catch (Exception ex)
             {
